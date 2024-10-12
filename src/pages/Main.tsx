@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import Folder from '../components/Main/Folder';
+import InputWithTitle from '../components/Main/InputWithTitle';
 
 const Main = () => {
   const folderDatas = [
@@ -47,7 +48,10 @@ const Main = () => {
           ))}
         </FolderWrapper>
       </LeftSection>
-      <RightBackground />
+
+      <RightBackground>
+        <InputWithTitle />
+      </RightBackground>
     </MainContainer>
   );
 };
@@ -67,7 +71,7 @@ const LeftSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 35px;
+  margin-top: 110px;
 `;
 
 const LeftTitleBox = styled.div`
