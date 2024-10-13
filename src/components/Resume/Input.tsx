@@ -22,13 +22,17 @@ const Input: React.FC<InputProps> = ({
       <Title
         placeholder="질문을 입력해주세요"
         value={title}
-        onChange={(e) => onChange(index, 'title', e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange(index, 'title', e.target.value)
+        }
       />
       <ContentWrapper>
         <Content
           placeholder="답변을 입력해주세요"
           value={content}
-          onChange={(e) => onChange(index, 'content', e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+            onChange(index, 'content', e.target.value)
+          }
         />
       </ContentWrapper>
       <RemoveButton onClick={() => onRemove(index)} />
