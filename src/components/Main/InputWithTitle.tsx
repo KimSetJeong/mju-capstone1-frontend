@@ -5,19 +5,19 @@ const InputWithTitle = () => {
   const Data = [
     {
       id: 0,
-      type: '기획 · 전략',
+      type: '영업',
     },
     {
       id: 1,
-      type: '마케팅 · 광고 · MD',
+      type: '엔지니어링 · 설계',
     },
     {
       id: 2,
-      type: '인사 · HR',
+      type: '제조 · 생산',
     },
     {
       id: 3,
-      type: '회계 · 세무',
+      type: '기획 · 전략',
     },
     {
       id: 4,
@@ -90,4 +90,5 @@ const BtnArea = styled.div`
   gap: 41px;
   margin-top: 60px;
   justify-content: center;
+  width: 600px;
 `;
