@@ -30,6 +30,7 @@ const LightCircle = styled(Light)`
   position: absolute;
   top: 0;
   left: 0;
+  z-index: -1;
 `;
 
 const DarkCircle = styled(Dark)`
