@@ -3,7 +3,6 @@ import { ReactComponent as Logo } from '../assets/images/BigLogo.svg';
 import { ReactComponent as CircleM } from '../assets/images/Circle1.svg';
 import { ReactComponent as CircleL } from '../assets/images/Circle2.svg';
 import { ReactComponent as CircleS } from '../assets/images/Circle3.svg';
-import { ReactComponent as Kakao } from '../assets/images/Kakao.svg';
 
 const Login = () => {
   return (
@@ -20,10 +19,16 @@ const Login = () => {
               </>
             }
           </Title>
-          <LoginBtn>
-            <KakaoLogo />
-            카카오 로그인
-          </LoginBtn>
+          <LoginArea>
+            <InputWrapper>
+              <Input placeholder="ID" />
+              <Input placeholder="Password" type="password" />
+            </InputWrapper>
+            <BtnWrapper>
+              <LoginBtn>Login</LoginBtn>
+              <JoinBtn>Join</JoinBtn>
+            </BtnWrapper>
+          </LoginArea>
         </ContentContainer>
         <StyledCircleS />
         <StyledCircleM />
@@ -82,23 +87,62 @@ const Title = styled.p`
   margin-bottom: 46px;
 `;
 
-const LoginBtn = styled.button`
-  width: 300px;
-  height: 45px;
-  background-color: #ffe812;
-  border: none;
-  border-radius: 10px;
+const LoginArea = styled.div`
   display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-  color: ${({ theme }) => theme.color.BLACK};
-  font-size: 18px;
-  font-weight: 600;
-  box-shadow: 0 2px 2px 0 rgba(00, 00, 00, 0.1);
+  gap: 40px;
 `;
 
-const KakaoLogo = styled(Kakao)`
-  width: 20px;
-  height: auto;
+const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const Input = styled.input`
+  width: 400px;
+  height: 60px;
+  border: 1px solid #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px 0 rgba(00, 00, 00, 0.1);
+  padding: 0 37px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    font-size: 15px;
+    font-weight: 800;
+    color: #9c9ca1;
+  }
+`;
+
+const BtnWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const LoginBtn = styled.button`
+  width: 80px;
+  height: 90px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.color.BLUE700};
+  color: ${({ theme }) => theme.color.WHITE};
+  box-shadow: 0 4px 10px 0 rgba(00, 00, 00, 0.1);
+  font-size: 15px;
+  font-weight: 800;
+  text-align: center;
+`;
+
+const JoinBtn = styled.button`
+  width: 80px;
+  height: 30px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.color.BLUE700};
+  color: ${({ theme }) => theme.color.WHITE};
+  box-shadow: 0 4px 10px 0 rgba(00, 00, 00, 0.1);
+  font-size: 15px;
+  font-weight: 800;
+  text-align: center;
 `;
