@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
+import { AxiosSignUp } from '../apis/AxiosSignUp';
 
 type FormValues = {
   username: string;
@@ -23,8 +24,12 @@ const SignUp: React.FC = () => {
     trigger();
   }, [trigger]);
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
+  const onSubmit = async (data: FormValues) => {
+    try {
+      await AxiosSignUp(data);
+    } catch (error) {
+      console.error('회원가입 실패:', error);
+    }
   };
 
   const password = watch('password');
