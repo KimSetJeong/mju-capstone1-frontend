@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import { AxiosSignUp, AxiosIdExists } from '../apis/AxiosSignUp';
+import { useNavigate } from 'react-router-dom';
 
 type FormValues = {
   username: string;
@@ -10,6 +11,7 @@ type FormValues = {
 };
 
 const SignUp: React.FC = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -36,6 +38,7 @@ const SignUp: React.FC = () => {
   const onSubmit = async (data: FormValues) => {
     try {
       await AxiosSignUp(data);
+      navigate('/login');
     } catch (error) {
       console.error('회원가입 실패:', error);
     }
