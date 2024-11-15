@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
-import { AxiosSignUp } from '../apis/AxiosSignUp';
+import { AxiosSignUp, AxiosIdExists } from '../apis/AxiosSignUp';
 
 type FormValues = {
   username: string;
@@ -23,6 +23,15 @@ const SignUp: React.FC = () => {
   useEffect(() => {
     trigger();
   }, [trigger]);
+
+  const onIdExist = async () => {
+    try {
+      await AxiosIdExists({ username: watch('username') });
+      trigger();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -59,7 +68,7 @@ const SignUp: React.FC = () => {
                 },
               })}
             />
-            <IdBtn>Check</IdBtn>
+            <IdBtn onClick={onIdExist}>Check</IdBtn>
           </IdWrapper>
           <InputGuide>{errors.username && errors.username.message}</InputGuide>
         </div>
