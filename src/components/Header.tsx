@@ -33,10 +33,11 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 95px;
-  position: sticky;
+  position: fixed;
   top: 0;
   background-color: #fff;
   box-shadow: 0 2px 2px 0 rgba(00, 00, 00, 0.1);
+  width: 100%;
 `;
 
 const InnerContainer = styled.div`
