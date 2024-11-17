@@ -16,7 +16,7 @@ import Main from './pages/Main';
 function App() {
   const HeaderWrapper = () => {
     const location = useLocation();
-    const hideHeaderPaths = ['/login', '/signup'];
+    const hideHeaderPaths = ['/Login', '/signup'];
     if (hideHeaderPaths.includes(location.pathname)) {
       return null;
     }
