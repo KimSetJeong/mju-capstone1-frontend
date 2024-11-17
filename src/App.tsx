@@ -15,7 +15,7 @@ import SignUp from './pages/SignUp';
 function App() {
   const HeaderWrapper = () => {
     const location = useLocation();
-    const hideHeaderPaths = ['/login', '/signup'];
+    const hideHeaderPaths = ['/Login', '/signup'];
     if (hideHeaderPaths.includes(location.pathname)) {
       return null;
     }
