@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
 import { GlobalFont } from './styles/GlobalFont';
 import GlobalStyle from './styles/GlobalStyle';
+import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <GlobalStyle />
         <Router>
           <Routes>
+            <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
           </Routes>
         </Router>
