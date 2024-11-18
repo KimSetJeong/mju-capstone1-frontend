@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Input from '../components/Resume/Input';
+import { AxiosResume, ResumeValues } from '../apis/AxiosResume';
+import { useNavigate } from 'react-router-dom';
 
 interface InputData {
   title: string;
@@ -8,6 +10,7 @@ interface InputData {
 }
 
 const Resume: React.FC = () => {
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState<InputData[]>([
     { title: '', content: '' },
     { title: '', content: '' },
@@ -38,6 +41,30 @@ const Resume: React.FC = () => {
     setInputs(updatedInputs);
   };
 
+  const handleSubmit = async () => {
+    const isValid = inputs.every(
+      (input) => input.title.trim() !== '' && input.content.trim() !== '',
+    );
+
+    if (!isValid) {
+      alert('모든 문항의 제목과 내용을 작성해주세요.');
+      return;
+    }
+
+    const data: ResumeValues = {
+      inputs,
+    };
+
+    try {
+      const response = await AxiosResume(data);
+      console.log(response);
+      alert('성공적으로 제출되었습니다!');
+      navigate('/question');
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <Container>
       <Top>
@@ -58,13 +85,11 @@ const Resume: React.FC = () => {
       </InputWrapper>
       {inputs.length !== 5 ? (
         <Button onClick={handleAddInput}>항목 추가</Button>
-      ) : (
-        <></>
-      )}
+      ) : null}
       <GuideText>
         아래 다음 버튼을 눌러 자소서 기반 예상 질문을 받아보세요 !
       </GuideText>
-      <Button>다음</Button>
+      <Button onClick={handleSubmit}>다음</Button>
     </Container>
   );
 };
@@ -76,7 +101,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 62px 0 100px;
+  margin: 150px 0 100px;
 `;
 
 const Top = styled.div`
