@@ -43,7 +43,7 @@ const Main = () => {
               step={data.step}
               title={data.title}
               content={data.content}
-              isOdd={data.id % 2 === 1}
+              $isOdd={data.id % 2 === 1}
             />
           ))}
         </FolderWrapper>

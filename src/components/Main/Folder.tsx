@@ -4,12 +4,12 @@ interface FolderProps {
   step: string;
   title: string;
   content: string;
-  isOdd: boolean;
+  $isOdd: boolean;
 }
 
-const Folder: React.FC<FolderProps> = ({ step, title, content, isOdd }) => {
+const Folder: React.FC<FolderProps> = ({ step, title, content, $isOdd }) => {
   return (
-    <FolderWrapper isOdd={isOdd}>
+    <FolderWrapper $isOdd={$isOdd}>
       <StepBox>{step}</StepBox>
       <TextBox>
         <Title>{title}</Title>
@@ -21,10 +21,10 @@ const Folder: React.FC<FolderProps> = ({ step, title, content, isOdd }) => {
 
 export default Folder;
 
-const FolderWrapper = styled.div<{ isOdd: boolean }>`
+const FolderWrapper = styled.div<{ $isOdd: boolean }>`
   display: flex;
   flex-direction: column;
-  margin-top: ${({ isOdd }) => (isOdd ? '40px' : '0')};
+  margin-top: ${({ $isOdd }) => ($isOdd ? '40px' : '0')};
 `;
 
 const StepBox = styled.div`

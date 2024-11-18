@@ -1,40 +1,65 @@
 import styled from 'styled-components';
 import JobTypeBtn from './JobTypeBtn';
+import { useState } from 'react';
+import { AxiosTitleNJob, TitleNJobValues } from '../../apis/AxiosMain';
+import { useNavigate } from 'react-router-dom';
 
 const InputWithTitle = () => {
   const Data = [
-    {
-      id: 0,
-      type: '영업',
-    },
-    {
-      id: 1,
-      type: '엔지니어링 · 설계',
-    },
-    {
-      id: 2,
-      type: '제조 · 생산',
-    },
-    {
-      id: 3,
-      type: '기획 · 전략',
-    },
-    {
-      id: 4,
-      type: '개발 · 데이터',
-    },
+    { id: 0, type: '영업', submit: '영업' },
+    { id: 1, type: '엔지니어링 · 설계', submit: '엔지니어링·설계' },
+    { id: 2, type: '제조 · 생산', submit: '제조·생산' },
+    { id: 3, type: '기획 · 전략', submit: '기획·전략' },
+    { id: 4, type: '개발 · 데이터', submit: '개발·데이터' },
   ];
+  const navigate = useNavigate();
+  const [title, setTitle] = useState('');
+  const [selectedType, setSelectedType] = useState<string | null>(null);
+
+  const handleSubmit = async () => {
+    if (!title || !selectedType) {
+      alert('제목과 직무를 모두 선택해주세요!');
+      return;
+    }
+
+    const data: TitleNJobValues = {
+      title,
+      categoryName: selectedType,
+    };
+
+    try {
+      const response = await AxiosTitleNJob(data);
+      console.log(response);
+      alert('성공적으로 제출되었습니다!');
+      navigate('/resume');
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <>
       <Wrapper>
         <Title>STEP 01. 제목과 희망 직무 설정하기</Title>
         <SubTitle>제목과 직무를 선택하고 시작하기 버튼을 눌러주세요 !</SubTitle>
-        <Input placeholder="여기에 제목을 입력해주세요 :)" />
+        <Input
+          value={title}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTitle(e.target.value)
+          }
+          placeholder="여기에 제목을 입력해주세요 :)"
+        />
         <BtnArea>
           {Data.map((data) => (
-            <JobTypeBtn key={data.id}>{data.type}</JobTypeBtn>
+            <JobTypeBtn
+              $isSelected={selectedType === data.submit}
+              onClick={() => setSelectedType(data.submit)}
+              key={data.id}
+            >
+              {data.type}
+            </JobTypeBtn>
           ))}
-          <SubmitBtn>시작하기</SubmitBtn>
+          <SubmitBtn onClick={handleSubmit}>시작하기</SubmitBtn>
         </BtnArea>
       </Wrapper>
     </>
