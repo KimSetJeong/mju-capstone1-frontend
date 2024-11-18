@@ -38,6 +38,7 @@ const Container = styled.div`
   background-color: #fff;
   box-shadow: 0 2px 2px 0 rgba(00, 00, 00, 0.1);
   width: 100%;
+  z-index: 100;
 `;
 
 const InnerContainer = styled.div`
