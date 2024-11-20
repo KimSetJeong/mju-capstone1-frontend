@@ -33,8 +33,8 @@ function App() {
         <Router>
           <HeaderWrapper />
           <Routes>
-            <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/" element={<Main />} />
             <Route path="/resume" element={<Resume />} />
           </Routes>
