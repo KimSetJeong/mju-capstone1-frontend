@@ -8,6 +8,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
 import { GlobalFont } from './styles/GlobalFont';
 import GlobalStyle from './styles/GlobalStyle';
+import Resume from './pages/Resume';
 import Header from './components/Header';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -16,7 +17,7 @@ import Main from './pages/Main';
 function App() {
   const HeaderWrapper = () => {
     const location = useLocation();
-    const hideHeaderPaths = ['/Login', '/signup'];
+    const hideHeaderPaths = ['/Login', '/login', '/signup'];
     if (hideHeaderPaths.includes(location.pathname)) {
       return null;
     }
@@ -32,9 +33,10 @@ function App() {
         <Router>
           <HeaderWrapper />
           <Routes>
-            <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/" element={<Main />} />
+            <Route path="/resume" element={<Resume />} />
           </Routes>
         </Router>
       </ThemeProvider>
