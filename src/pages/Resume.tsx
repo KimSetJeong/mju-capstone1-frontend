@@ -5,6 +5,7 @@ import { AxiosResume, ResumeValues } from '../apis/AxiosResume';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { QuestionsAtom } from '../atoms/Questions';
+import Loading from './Loading';
 
 interface InputData {
   title: string;
@@ -19,6 +20,7 @@ const Resume: React.FC = () => {
     { title: '', content: '' },
   ]);
   const [questions, setQuestions] = useRecoilState(QuestionsAtom);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleAddInput = () => {
     if (inputs.length < 5) {
@@ -45,6 +47,8 @@ const Resume: React.FC = () => {
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true);
+
     const isValid = inputs.every(
       (input) => input.title.trim() !== '' && input.content.trim() !== '',
     );
@@ -61,14 +65,22 @@ const Resume: React.FC = () => {
     try {
       const response = await AxiosResume(data);
       setQuestions(response);
-      alert('성공적으로 제출되었습니다!');
-      navigate('/question');
+
+      if (questions[0].length > 0) {
+        alert('성공적으로 제출되었습니다.');
+        navigate('/question');
+      }
     } catch (error) {
       console.error('Error:', error);
+      alert('제출에 실패했습니다.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <Container>
       <Top>
         <Title>STEP 02. 자소서 문항 작성하기</Title>
@@ -105,6 +117,14 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   margin: 150px 0 100px;
+`;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
 `;
 
 const Top = styled.div`

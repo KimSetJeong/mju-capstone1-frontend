@@ -8,12 +8,14 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
 import { GlobalFont } from './styles/GlobalFont';
 import GlobalStyle from './styles/GlobalStyle';
+
 import Question from './pages/Question';
 import Resume from './pages/Resume';
 import Header from './components/Header';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Main from './pages/Main';
+import Loading from './pages/Loading';
 
 function App() {
   const HeaderWrapper = () => {
@@ -39,6 +41,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Main />} />
             <Route path="/resume" element={<Resume />} />
+            <Route path="/loading" element={<Loading />} />
           </Routes>
         </Router>
       </ThemeProvider>

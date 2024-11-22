@@ -1,9 +1,14 @@
 import { styled } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { QuestionsAtom } from '../atoms/Questions';
+import { useNavigate } from 'react-router-dom';
 
 const Question = () => {
   const questions = useRecoilValue(QuestionsAtom);
+  const navigate = useNavigate();
+  const handleGoUpload = () => {
+    navigate('/upload');
+  };
   return (
     <Wrapper>
       <Container>
@@ -17,7 +22,7 @@ const Question = () => {
           이제 위 예상 질문을 바탕으로 10분 이내의 면접 영상을 준비해주세요!
         </PrepareText>
         <BtnWrapper>
-          <NextBtn>다음</NextBtn>
+          <NextBtn onClick={handleGoUpload}>다음</NextBtn>
         </BtnWrapper>
       </Container>
     </Wrapper>
