@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Input from '../components/Resume/Input';
 import { AxiosResume, ResumeValues } from '../apis/AxiosResume';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { QuestionsAtom } from '../atoms/Questions';
 
 interface InputData {
   title: string;
@@ -16,6 +18,7 @@ const Resume: React.FC = () => {
     { title: '', content: '' },
     { title: '', content: '' },
   ]);
+  const [questions, setQuestions] = useRecoilState(QuestionsAtom);
 
   const handleAddInput = () => {
     if (inputs.length < 5) {
@@ -57,7 +60,7 @@ const Resume: React.FC = () => {
 
     try {
       const response = await AxiosResume(data);
-      console.log(response);
+      setQuestions(response);
       alert('성공적으로 제출되었습니다!');
       navigate('/question');
     } catch (error) {
