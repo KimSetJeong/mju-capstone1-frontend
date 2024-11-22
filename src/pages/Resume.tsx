@@ -119,14 +119,6 @@ const Container = styled.div`
   margin: 150px 0 100px;
 `;
 
-const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  width: 100%;
-`;
-
 const Top = styled.div`
   display: flex;
   flex-direction: column;
