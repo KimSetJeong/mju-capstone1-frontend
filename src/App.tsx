@@ -8,6 +8,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
 import { GlobalFont } from './styles/GlobalFont';
 import GlobalStyle from './styles/GlobalStyle';
+import Question from './pages/Question';
 import Resume from './pages/Resume';
 import Header from './components/Header';
 import Login from './pages/Login';
@@ -33,6 +34,7 @@ function App() {
         <Router>
           <HeaderWrapper />
           <Routes>
+            <Route path="/question" element={<Question />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Main />} />
