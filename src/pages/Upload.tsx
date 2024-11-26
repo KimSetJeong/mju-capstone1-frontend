@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { AxiosVideo } from '../apis/AxiosVideo';
 import { ReactComponent as FileIcon } from '../assets/images/FileIcon.svg';
+import Loading from './Loading';
 
 interface FileInfo {
   name: string;
@@ -9,8 +12,11 @@ interface FileInfo {
 }
 
 const Upload = () => {
+  const navigate = useNavigate();
   const [isActive, setActive] = useState(false);
   const [uploadedInfo, setUploadedInfo] = useState<FileInfo | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleDragStart = () => setActive(true);
   const handleDragEnd = () => setActive(false);
@@ -23,6 +29,7 @@ const Upload = () => {
     const { name, size: byteSize, type } = file;
     const size = (byteSize / (1024 * 1024)).toFixed(2) + 'mb';
     setUploadedInfo({ name, size, type });
+    setSelectedFile(file);
   };
 
   const handleDrop = (event: React.DragEvent) => {
@@ -39,7 +46,27 @@ const Upload = () => {
     }
   };
 
-  return (
+  const handleSubmit = async () => {
+    setIsLoading(true);
+
+    if (selectedFile) {
+      try {
+        await AxiosVideo({ file: selectedFile });
+        alert('영상 제출 성공!');
+        navigate('/result');
+      } catch (error) {
+        alert('영상 제출에 실패하였습니다 ㅠ.ㅠ');
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      alert('먼저 파일을 선택해주세요.');
+    }
+  };
+  return isLoading ? (
+    <Loading />
+  ) : (
     <Container>
       <StepGuideWrapper>
         <StepTitle>STEP 03. 면접 영상 제출하기</StepTitle>
@@ -53,7 +80,7 @@ const Upload = () => {
         onDragLeave={handleDragEnd}
         onDrop={handleDrop}
       >
-        <Input type="file" onChange={handleUpload} />
+        <Input type="file" accept=".mp4, .mov" onChange={handleUpload} />
         {uploadedInfo ? (
           <FileInfoWrapper>
             <FileInfoItem>
@@ -74,10 +101,13 @@ const Upload = () => {
             <FileIcon />
             <GuideTitle>영상 드래그하거나 클릭해서 업로드</GuideTitle>
             <GuideText>10분 이내 영상을 올려주세요!</GuideText>
+            <GuideText>.mp4, .mov 파일만 업로드가 가능합니다</GuideText>
           </>
         )}
       </InputLabel>
-      <NextBtn>결과보기</NextBtn>
+      <NextBtn type="submit" onClick={handleSubmit}>
+        결과보기
+      </NextBtn>
     </Container>
   );
 };
@@ -90,6 +120,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   padding: 46px 0;
+  margin-top: 120px;
 `;
 
 const StepGuideWrapper = styled.div`
@@ -134,11 +165,11 @@ const GuideTitle = styled.p`
   font-weight: 800;
   font-size: 25px;
   color: ${({ theme }) => theme.color.BLACK};
-  margin-top: 20px;
+  margin: 20px 0 10px;
 `;
 
 const GuideText = styled.p`
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 400;
   color: ${({ theme }) => theme.color.BLACK};
   margin-top: 3px;

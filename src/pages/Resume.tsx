@@ -67,8 +67,8 @@ const Resume: React.FC = () => {
       setQuestions(response);
 
       if (questions[0].length > 0) {
-        alert('성공적으로 제출되었습니다.');
         navigate('/question');
+        alert('성공적으로 제출되었습니다.');
       }
     } catch (error) {
       console.error('Error:', error);
