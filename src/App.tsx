@@ -16,6 +16,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Main from './pages/Main';
 import Loading from './pages/Loading';
+import Upload from './pages/Upload';
 
 function App() {
   const HeaderWrapper = () => {
@@ -42,6 +43,7 @@ function App() {
             <Route path="/" element={<Main />} />
             <Route path="/resume" element={<Resume />} />
             <Route path="/loading" element={<Loading />} />
+            <Route path="/upload" element={<Upload />} />
           </Routes>
         </Router>
       </ThemeProvider>
