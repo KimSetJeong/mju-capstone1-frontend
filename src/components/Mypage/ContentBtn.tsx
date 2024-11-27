@@ -10,7 +10,7 @@ interface BtnProps {
 const ContentBtn: React.FC<BtnProps> = ({ id, title, date }) => {
   const naviagate = useNavigate();
   const handleGoReport = () => {
-    naviagate(`/${id}`); // 수정 필요
+    naviagate(`/mypage/${id}`); // 수정 필요
   };
   return (
     <>

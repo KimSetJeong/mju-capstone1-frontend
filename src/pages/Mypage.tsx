@@ -1,14 +1,34 @@
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
+import { AxiosMypage } from '../apis/AxiosMypage';
 import ContentBtn from '../components/Mypage/ContentBtn';
 
+interface Record {
+  titleId: number;
+  title: string;
+  createdAt: string;
+}
+
+interface RecordData {
+  myRecord: Record[];
+}
+
 const Mypage = () => {
-  const Datas = [
-    { id: 0, title: '삼성 합격 기원', date: '2024.09.01 13:50' },
-    { id: 1, title: 'LG 합격 기원', date: '2024.09.01 13:50' },
-    { id: 2, title: '합격 기원', date: '2024.09.01 13:50' },
-    { id: 3, title: '합격 할래 말래', date: '2024.09.01 13:50' },
-    { id: 4, title: '어떡할래', date: '2024.09.01 13:50' },
-  ];
+  const [response, setResponse] = useState<RecordData | null>(null);
+  const fetchData = async () => {
+    try {
+      const response = await AxiosMypage();
+      setResponse(response);
+      console.log(response);
+    } catch (error) {
+      console.error('마이 페이지 에러 발생: ', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <Container>
       <TopWrapper>
@@ -17,12 +37,12 @@ const Mypage = () => {
       </TopWrapper>
       <Line />
       <BtnArea>
-        {Datas.map((data) => (
+        {response?.myRecord.map((data) => (
           <ContentBtn
-            key={data.id}
-            id={data.id}
+            key={data.titleId}
+            id={data.titleId}
             title={data.title}
-            date={data.date}
+            date={new Date(data.createdAt || '').toLocaleString('ko-KR')}
           />
         ))}
       </BtnArea>
@@ -38,10 +58,11 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 70px;
 `;
 
 const TopWrapper = styled.div`
-  width: 100%;
+  width: 80%;
   display: flex;
   justify-content: space-between;
 `;
@@ -66,7 +87,7 @@ const LogoutBtn = styled.button`
 `;
 
 const Line = styled.div`
-  width: 100%;
+  width: 90%;
   height: 1px;
   background-color: ${({ theme }) => theme.color.BLUE200};
   margin-top: 26px;
