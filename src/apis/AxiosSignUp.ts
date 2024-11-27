@@ -25,7 +25,6 @@ export const AxiosSignUp = async (data: FormValues) => {
 export const AxiosIdExists = async (data: IdExist) => {
   try {
     const response = await Axios.get(`/api/email/${data.username}/exists`);
-    console.log(response.data);
     if (response.data.data) {
       alert('이미 사용중인 아이디입니다 ㅠ.ㅠ');
     } else {

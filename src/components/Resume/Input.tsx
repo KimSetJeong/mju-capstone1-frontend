@@ -6,8 +6,9 @@ interface InputProps {
   index: number;
   title: string;
   content: string;
-  onChange: (index: number, field: 'title' | 'content', value: string) => void;
-  onRemove: (index: number) => void;
+  onChange?: (index: number, field: 'title' | 'content', value: string) => void;
+  onRemove?: (index: number) => void;
+  readOnly?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -16,6 +17,7 @@ const Input: React.FC<InputProps> = ({
   content,
   onChange,
   onRemove,
+  readOnly = false,
 }) => {
   return (
     <Container>
@@ -23,19 +25,21 @@ const Input: React.FC<InputProps> = ({
         placeholder="질문을 입력해주세요"
         value={title}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          onChange(index, 'title', e.target.value)
+          onChange?.(index, 'title', e.target.value)
         }
+        readOnly={readOnly}
       />
       <ContentWrapper>
         <Content
           placeholder="답변을 입력해주세요"
           value={content}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-            onChange(index, 'content', e.target.value)
+            onChange?.(index, 'content', e.target.value)
           }
+          readOnly={readOnly}
         />
       </ContentWrapper>
-      <RemoveButton onClick={() => onRemove(index)} />
+      {onRemove && <RemoveButton onClick={() => onRemove(index)} />}
     </Container>
   );
 };
@@ -49,7 +53,7 @@ const Container = styled.div`
   position: relative;
 `;
 
-const Title = styled.input`
+const Title = styled.input<{ readOnly: boolean }>`
   width: 1000px;
   height: 24px;
   font-size: 20px;
@@ -57,6 +61,8 @@ const Title = styled.input`
   border: none;
   outline: none;
   overflow: hidden;
+  cursor: ${({ readOnly }) => (readOnly ? 'not-allowed' : 'text')};
+  user-select: ${({ readOnly }) => (readOnly ? 'none' : 'auto')};
 `;
 
 const ContentWrapper = styled.div`
@@ -69,7 +75,7 @@ const ContentWrapper = styled.div`
   overflow: hidden;
 `;
 
-const Content = styled.textarea`
+const Content = styled.textarea<{ readOnly: boolean }>`
   width: 100%;
   height: 100%;
   border: none;
@@ -78,6 +84,8 @@ const Content = styled.textarea`
   overflow-y: auto;
   box-sizing: border-box;
   padding: 0;
+  cursor: ${({ readOnly }) => (readOnly ? 'not-allowed' : 'text')};
+  user-select: ${({ readOnly }) => (readOnly ? 'none' : 'auto')};
 `;
 
 const RemoveButton = styled(Delete)`

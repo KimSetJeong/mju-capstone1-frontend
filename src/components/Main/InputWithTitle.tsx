@@ -28,8 +28,8 @@ const InputWithTitle = () => {
     };
 
     try {
-      const response = await AxiosTitleNJob(data);
-      console.log(response);
+      await AxiosTitleNJob(data);
+
       alert('성공적으로 제출되었습니다!');
       navigate('/resume');
     } catch (error) {
@@ -115,5 +115,5 @@ const BtnArea = styled.div`
   gap: 41px;
   margin-top: 60px;
   justify-content: center;
-  width: 600px;
+  width: 500px;
 `;

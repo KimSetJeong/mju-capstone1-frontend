@@ -20,6 +20,7 @@ import Loading from './pages/Loading';
 import Upload from './pages/Upload';
 import Result from './pages/Result';
 import Mypage from './pages/Mypage';
+import Record from './pages/Record';
 
 function App() {
   const HeaderWrapper = () => {
@@ -49,6 +50,7 @@ function App() {
             <Route path="/result" element={<Result />} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/mypage" element={<Mypage />} />
+            <Route path="/mypage/:id" element={<Record />} />
           </Routes>
         </Router>
       </ThemeProvider>

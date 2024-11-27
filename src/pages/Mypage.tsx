@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { AxiosMypage } from '../apis/AxiosMypage';
 import ContentBtn from '../components/Mypage/ContentBtn';
@@ -14,12 +15,13 @@ interface RecordData {
 }
 
 const Mypage = () => {
+  const navigate = useNavigate();
   const [response, setResponse] = useState<RecordData | null>(null);
+
   const fetchData = async () => {
     try {
       const response = await AxiosMypage();
       setResponse(response);
-      console.log(response);
     } catch (error) {
       console.error('마이 페이지 에러 발생: ', error);
     }
@@ -29,11 +31,17 @@ const Mypage = () => {
     fetchData();
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    alert('로그아웃 되었습니다!');
+    navigate('/login');
+  };
+
   return (
     <Container>
       <TopWrapper>
         <Text>나의 기록</Text>
-        <LogoutBtn>로그아웃</LogoutBtn>
+        <LogoutBtn onClick={handleLogout}>로그아웃</LogoutBtn>
       </TopWrapper>
       <Line />
       <BtnArea>

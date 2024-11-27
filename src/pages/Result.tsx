@@ -22,7 +22,6 @@ const Result = () => {
     try {
       const result = await AxiosResult();
       setResponse(result);
-      console.log(response);
     } catch (error) {
       console.error('Error fetching result data:', error);
     }
@@ -40,7 +39,6 @@ const Result = () => {
   const parsedFeedback = JSON.parse(feedback);
   const parsedGraph = JSON.parse(graph);
   const parsedFace = JSON.parse(faceResult);
-  console.log(parsedFeedback.interview_feedback);
 
   return (
     <Container>
