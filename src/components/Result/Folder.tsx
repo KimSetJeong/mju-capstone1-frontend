@@ -50,7 +50,7 @@ const Box = styled.div<BoxProps>`
   width: ${(props) =>
     props.$title === '자기소개서 기반 피드백' ? '1050px' : '500px'};
   height: fit-content;
-  min-height: 300px;
+  min-height: 130px;
   color: ${({ theme }) => theme.color.BLACK};
   background-color: ${({ theme }) => theme.color.BLUE200};
   border-radius: 10px;
@@ -58,8 +58,9 @@ const Box = styled.div<BoxProps>`
   position: relative;
   font-size: 15px;
   font-weight: 400;
-  line-height: 130%;
+  line-height: 170%;
   left: 20px;
   z-index: 1;
   box-shadow: 0px 4px 10px 0 rgba(0, 0, 0, 0.1);
+  white-space: pre-wrap;
 `;

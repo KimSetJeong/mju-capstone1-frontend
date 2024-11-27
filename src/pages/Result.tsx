@@ -2,45 +2,80 @@ import { styled } from 'styled-components';
 import Folder from '../components/Result/Folder';
 import GraphFolder from '../components/Result/GraphFolder';
 import Expression from '../components/Result/Expression';
+import { AxiosResult } from '../apis/AxiosResult';
+import { useEffect, useState } from 'react';
+import Loading from './Loading';
+
+interface ResultData {
+  title: string;
+  createdAt: string;
+  videoUrl: string;
+  feedback: string;
+  faceResult: string;
+  graph: string;
+}
 
 const Result = () => {
-  return (
-    <>
-      <Container>
-        <StepText>STEP 04. 피드백 보고서 확인하기</StepText>
-        <StepSmallText>
-          모든 단계를 해내셨어요 ! 아래를 확인해보세요 :)
-        </StepSmallText>
-        <Title>삼성 합격 기원</Title>
-        <Date>2024.09.01 13:50</Date>
-        <VideoNExpressionWrapper>
-          <VideoWrapper controls>
-            <source
-              src="https://www.w3schools.com/html/mov_bbb.mp4"
-              type="video/mp4"
-            />
-            브라우저가 동영상을 지원하지 않습니다.
-          </VideoWrapper>
-          <Expression></Expression>
-        </VideoNExpressionWrapper>
+  const [response, setResponse] = useState<ResultData | null>(null);
 
-        <SmallFolderWrapper>
-          <Folder
-            title="면접 영상 기반 피드백"
-            content="답변의 논리성
-          답변을 전개하는 과정에서 논리적인 흐름이 잘 잡혀 있었습니다.
-          다만, 추가적으로 "
-          />
-          <GraphFolder />
-        </SmallFolderWrapper>
+  const fetchResultData = async () => {
+    try {
+      const result = await AxiosResult();
+      setResponse(result);
+      console.log(response);
+    } catch (error) {
+      console.error('Error fetching result data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchResultData();
+  }, []);
+
+  if (!response) {
+    return <Loading />;
+  }
+
+  const { title, createdAt, videoUrl, feedback, graph, faceResult } = response;
+  const parsedFeedback = JSON.parse(feedback);
+  const parsedGraph = JSON.parse(graph);
+  const parsedFace = JSON.parse(faceResult);
+  console.log(parsedFeedback.interview_feedback);
+
+  return (
+    <Container>
+      <StepText>STEP 04. 피드백 보고서 확인하기</StepText>
+      <StepSmallText>
+        모든 단계를 해내셨어요 ! 아래를 확인해보세요 :)
+      </StepSmallText>
+      <Title>{title}</Title>
+      <StyledDate>
+        {new Date(createdAt || '').toLocaleString('ko-KR')}
+      </StyledDate>
+      <VideoNExpressionWrapper>
+        <VideoWrapper controls>
+          <source src={videoUrl} />
+          브라우저가 동영상을 지원하지 않습니다.
+        </VideoWrapper>
+        <Expression
+          Positive={parsedFace.Positive}
+          Neutral={parsedFace.Neutral}
+          Negative={parsedFace.Negative}
+        />
+      </VideoNExpressionWrapper>
+
+      <SmallFolderWrapper>
         <Folder
-          title="자기소개서 기반 피드백"
-          content="답변의 논리성
-          답변을 전개하는 과정에서 논리적인 흐름이 잘 잡혀 있었습니다.
-          다만, 추가적으로 "
-        ></Folder>
-      </Container>
-    </>
+          title="면접 영상 기반 피드백"
+          content={parsedFeedback.interview_feedback}
+        />
+        <GraphFolder data={parsedGraph.top3_predictions} />
+      </SmallFolderWrapper>
+      <Folder
+        title="자기소개서 기반 피드백"
+        content={parsedFeedback.resume_feedback}
+      />
+    </Container>
   );
 };
 
@@ -48,7 +83,7 @@ export default Result;
 
 const Container = styled.div`
   padding: 0 80px;
-  margin: 39px 0 70px;
+  margin: 140px 0 70px;
   display: flex;
   flex-direction: column;
 `;
@@ -62,7 +97,7 @@ const StepText = styled.p`
 const StepSmallText = styled.p`
   font-size: 17px;
   font-weight: 500;
-  margin-bottom: 18px;
+  margin-bottom: 30px;
 `;
 
 const Title = styled.p`
@@ -71,7 +106,7 @@ const Title = styled.p`
   margin-left: 10px;
 `;
 
-const Date = styled.p`
+const StyledDate = styled.p`
   font-size: 20px;
   font-weight: 500;
   margin-left: 10px;
