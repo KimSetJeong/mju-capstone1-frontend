@@ -55,6 +55,7 @@ const Upload = () => {
         alert('영상 제출 성공!');
         navigate('/result');
       } catch (error) {
+        console.log('영상 제출 실패 :', error);
         alert('영상 제출에 실패하였습니다 ㅠ.ㅠ');
       } finally {
         setIsLoading(false);

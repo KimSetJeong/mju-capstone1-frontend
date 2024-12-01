@@ -21,7 +21,7 @@ const Resume: React.FC = () => {
   ]);
   const [questions, setQuestions] = useRecoilState(QuestionsAtom);
   const [isLoading, setIsLoading] = useState(false);
-
+  console.log(questions);
   const handleAddInput = () => {
     if (inputs.length < 5) {
       setInputs([...inputs, { title: '', content: '' }]);
@@ -47,6 +47,9 @@ const Resume: React.FC = () => {
   };
 
   const handleSubmit = async () => {
+    // 중복 클릭 방지
+    if (isLoading) return;
+
     setIsLoading(true);
 
     const isValid = inputs.every(
@@ -55,6 +58,7 @@ const Resume: React.FC = () => {
 
     if (!isValid) {
       alert('모든 문항의 제목과 내용을 작성해주세요.');
+      setIsLoading(false); // 상태 초기화
       return;
     }
 
@@ -66,15 +70,15 @@ const Resume: React.FC = () => {
       const response = await AxiosResume(data);
       setQuestions(response);
 
-      if (questions[0].length > 0) {
-        navigate('/question');
+      if (response[0]?.length > 0) {
         alert('성공적으로 제출되었습니다.');
+        navigate('/question');
       }
     } catch (error) {
       console.error('Error:', error);
       alert('제출에 실패했습니다.');
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); // 상태 초기화
     }
   };
 

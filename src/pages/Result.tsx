@@ -42,14 +42,16 @@ const Result = () => {
 
   return (
     <Container>
-      <StepText>STEP 04. 피드백 보고서 확인하기</StepText>
-      <StepSmallText>
-        모든 단계를 해내셨어요 ! 아래를 확인해보세요 :)
-      </StepSmallText>
-      <Title>{title}</Title>
-      <StyledDate>
-        {new Date(createdAt || '').toLocaleString('ko-KR')}
-      </StyledDate>
+      <TextBox>
+        <StepText>STEP 04. 피드백 보고서 확인하기</StepText>
+        <StepSmallText>
+          모든 단계를 해내셨어요 ! 아래를 확인해보세요 :)
+        </StepSmallText>
+        <Title>{title}</Title>
+        <StyledDate>
+          {new Date(createdAt || '').toLocaleString('ko-KR')}
+        </StyledDate>
+      </TextBox>
       <VideoNExpressionWrapper>
         <VideoWrapper controls>
           <source src={videoUrl} />
@@ -61,18 +63,19 @@ const Result = () => {
           Negative={parsedFace.Negative}
         />
       </VideoNExpressionWrapper>
-
-      <SmallFolderWrapper>
+      <FolderArea>
+        <SmallFolderWrapper>
+          <Folder
+            title="면접 영상 기반 피드백"
+            content={parsedFeedback.interview_feedback}
+          />
+          <GraphFolder data={parsedGraph.top3_predictions} />
+        </SmallFolderWrapper>
         <Folder
-          title="면접 영상 기반 피드백"
-          content={parsedFeedback.interview_feedback}
+          title="자기소개서 기반 피드백"
+          content={parsedFeedback.resume_feedback}
         />
-        <GraphFolder data={parsedGraph.top3_predictions} />
-      </SmallFolderWrapper>
-      <Folder
-        title="자기소개서 기반 피드백"
-        content={parsedFeedback.resume_feedback}
-      />
+      </FolderArea>
     </Container>
   );
 };
@@ -84,12 +87,16 @@ const Container = styled.div`
   margin: 140px 0 70px;
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
+const TextBox = styled.div`
+  width: 1100px;
+`;
 const StepText = styled.p`
   font-size: 25px;
   font-weight: 900;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `;
 
 const StepSmallText = styled.p`
@@ -101,7 +108,7 @@ const StepSmallText = styled.p`
 const Title = styled.p`
   font-size: 36px;
   font-weight: 700;
-  margin-left: 10px;
+  margin: 0 0 10px 10px;
 `;
 
 const StyledDate = styled.p`
@@ -113,7 +120,7 @@ const StyledDate = styled.p`
 
 const VideoNExpressionWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  gap: 170px;
 `;
 
 const VideoWrapper = styled.video`
@@ -126,4 +133,8 @@ const SmallFolderWrapper = styled.div`
   display: flex;
   gap: 52px;
   margin-bottom: 51px;
+`;
+
+const FolderArea = styled.div`
+  margin-left: -30px;
 `;

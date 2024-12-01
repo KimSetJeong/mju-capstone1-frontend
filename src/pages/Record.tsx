@@ -73,13 +73,15 @@ const Record = () => {
         <Loading />
       ) : (
         <>
-          {title && <Title>{title}</Title>}
-          {createdAt && (
-            <StyledDate>
-              {new Date(createdAt).toLocaleString('ko-KR')}
-            </StyledDate>
-          )}
-          <Contour>자기소개서</Contour>
+          <TextBox>
+            {title && <Title>{title}</Title>}
+            {createdAt && (
+              <StyledDate>
+                {new Date(createdAt).toLocaleString('ko-KR')}
+              </StyledDate>
+            )}
+            <Contour>자기소개서</Contour>
+          </TextBox>
           <InputWrapper>
             {resume &&
               resume.map((data, index) => (
@@ -92,14 +94,18 @@ const Record = () => {
                 />
               ))}
           </InputWrapper>
-          <Contour>예상질문</Contour>
+          <TextBox>
+            <Contour>예상질문</Contour>
+          </TextBox>
           <Box>
             {expectedQuestion &&
               expectedQuestion.map((data, index) => (
                 <QuestionText key={index}>{data}</QuestionText>
               ))}
           </Box>
-          <Contour>최종 결과</Contour>
+          <TextBox>
+            <Contour>최종 결과</Contour>
+          </TextBox>
           <VideoNExpressionWrapper>
             <VideoWrapper controls>
               <source src={videoUrl} />
@@ -141,6 +147,11 @@ const Container = styled.div`
   margin: 140px 0 70px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+`;
+
+const TextBox = styled.div`
+  width: 1100px;
 `;
 
 const Title = styled.p`
@@ -171,7 +182,7 @@ const InputWrapper = styled.div`
 `;
 
 const Box = styled.div`
-  width: 90%;
+  width: 950px;
   height: 300px;
   background-color: ${({ theme }) => theme.color.BLUE100};
   border-radius: 20px;
@@ -192,7 +203,7 @@ const QuestionText = styled.p`
 
 const VideoNExpressionWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  gap: 160px;
 `;
 
 const VideoWrapper = styled.video`
